@@ -33,6 +33,7 @@ const addTokenIfExists = () => {
 };
 
 // User list actions
+const searchUsersUrl = "https://api.github.com/search/users?";
 export const fetchUsers = () => async (dispatch: Dispatch<any>) => {
   dispatch(fetchUsersLoading());
   let settings: any = {
@@ -43,10 +44,20 @@ export const fetchUsers = () => async (dispatch: Dispatch<any>) => {
   };
   try {
     const data = await (
-      await fetch("https://api.github.com/users?per_page=10&page=1", settings)
+      await fetch(
+        searchUsersUrl +
+          new URLSearchParams({
+            q: "followers:>=0",
+            s: "followers",
+            type: "Users",
+            per_page: "10",
+            page: "1",
+          }).toString(),
+        settings
+      )
     ).json();
     if (data.message !== "Not Found") {
-      dispatch(fetchUsersSuccess(data));
+      dispatch(fetchUsersSuccess(data.items));
     } else {
       throw new Error("Could not fetch users!");
     }

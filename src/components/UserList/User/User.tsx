@@ -5,6 +5,12 @@ interface Props {
 }
 
 export default function User({ user }: Props): ReactElement {
-  const { id, login } = user;
-  return <p>{`${login} - ${id}`}</p>;
+  const { login, html_url } = user;
+  return (
+    <p>
+      <a target="_blank" rel="noreferrer" href={html_url}>
+        {login}
+      </a>
+    </p>
+  );
 }
