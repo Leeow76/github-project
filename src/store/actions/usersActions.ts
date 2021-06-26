@@ -8,7 +8,7 @@ const fetchUsersLoading = () => (dispatch: Dispatch<any>) => {
     type: actionTypes.FETCH_USERS_LOADING,
   });
 };
-const fetchUsersSuccess = (users: any) => (dispatch: Dispatch<any>) => {
+const fetchUsersSuccess = (users: User[]) => (dispatch: Dispatch<any>) => {
   dispatch({
     type: actionTypes.FETCH_USERS_SUCCESS,
     users: users,

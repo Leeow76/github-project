@@ -1,11 +1,10 @@
-import { ReactElement } from 'react'
+import { ReactElement } from "react";
 
 interface Props {
-  user: User
+  user: User;
 }
 
-export default function User({user}: Props): ReactElement {
-  return (
-    <p>{`${user.login} - ${user.id}`}</p>
-  )
+export default function User({ user }: Props): ReactElement {
+  const { id, login } = user;
+  return <p>{`${login} - ${id}`}</p>;
 }

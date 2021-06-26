@@ -1,12 +1,20 @@
+import { AnyAction } from "redux";
+
 import * as actionTypes from "../actionTypes";
 
-const usersState = {
-  users: null,
-  usersError: null,
+export interface UserState {
+  users: User[];
+  usersError: string;
+  usersStatus: "idle" | "loading " | "success" | "failed";
+}
+
+const usersState: UserState = {
+  users: [],
+  usersError: "",
   usersStatus: "idle",
 };
 
-const usersReducer = (state = usersState, action: any) => {
+const usersReducer = (state = usersState, action: AnyAction) => {
   switch (action.type) {
     case actionTypes.FETCH_USERS_LOADING:
       return {

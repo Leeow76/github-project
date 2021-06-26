@@ -8,7 +8,7 @@
 //   selectedCompany: Company;
 // };
 
-type User = {
+interface User {
   login: string;
   id: number;
   node_id: string;
@@ -51,9 +51,9 @@ type User = {
     name: string;
     space: number;
     private_repos: number;
-    collaborators: number
-  }
-};
+    collaborators: number;
+  };
+}
 
 // type DropdownState = {
 //   dropdownContentOpened: boolean;
