@@ -33,7 +33,8 @@ const addTokenIfExists = () => {
 };
 
 // User list actions
-const searchUsersUrl = "https://api.github.com/search/users?";
+const searchUsersBaseUrl = "https://api.github.com/search/users?";
+
 export const fetchUsers = () => async (dispatch: Dispatch<any>) => {
   dispatch(fetchUsersLoading());
   let settings: any = {
@@ -45,7 +46,7 @@ export const fetchUsers = () => async (dispatch: Dispatch<any>) => {
   try {
     const data = await (
       await fetch(
-        searchUsersUrl +
+        searchUsersBaseUrl +
           new URLSearchParams({
             q: "followers:>=0",
             s: "followers",
@@ -57,9 +58,42 @@ export const fetchUsers = () => async (dispatch: Dispatch<any>) => {
       )
     ).json();
     if (data.message !== "Not Found") {
-      dispatch(fetchUsersSuccess(data.items));
+      const users = data.items;
+      dispatch(fetchUsersSuccess(users));
+      // Fetch user repos
+      users.forEach((user: User) => {
+        dispatch(fetchUserRepos(user.login));
+      });
     } else {
       throw new Error("Could not fetch users!");
+    }
+  } catch (error) {
+    dispatch(fetchUsersError(error));
+  }
+};
+
+const fetchUserRepos = (user: string) => async (dispatch: Dispatch<any>) => {
+  let settings: any = {
+    method: "GET",
+    headers: {
+      Authorization: addTokenIfExists(),
+    },
+  };
+  try {
+    const data = await (
+      await fetch(
+        `https://api.github.com/users/${user}/repos?per_page=3&page=99`,
+        settings
+      )
+    ).json();
+    if (data.message !== "Not Found") {
+      dispatch({
+        type: actionTypes.FETCH_USER_REPOS,
+        user: user,
+        repos: data,
+      });
+    } else {
+      throw new Error("Could not fetch user!");
     }
   } catch (error) {
     dispatch(fetchUsersError(error));

@@ -2,7 +2,7 @@ import { ReactElement, useEffect } from "react";
 import { Dispatch } from "redux";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 
-import * as userActions from "../../store/actions/usersActions";
+import * as usersActions from "../../store/actions/usersActions";
 import User from "./User/User";
 
 export default function UserList(): ReactElement {
@@ -18,9 +18,10 @@ export default function UserList(): ReactElement {
   );
 
   // Redux dispatches
+  // Fetch most followed users
   const dispatch: Dispatch<any> = useDispatch();
   useEffect(() => {
-    dispatch(userActions.fetchUsers());
+    dispatch(usersActions.fetchUsers());
   }, [dispatch]);
 
   let listedUsers = null;

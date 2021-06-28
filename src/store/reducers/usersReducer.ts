@@ -33,6 +33,18 @@ const usersReducer = (state = usersState, action: AnyAction) => {
         usersError: action.error.message,
         usersStatus: "failed",
       };
+    case actionTypes.FETCH_USER_REPOS:
+      let fetchUserReposUsers = [...state.users];
+      const targetUser = fetchUserReposUsers.find(
+        (user) => user.login === action.user
+      );
+      if (targetUser) {
+        targetUser["repos"] = action.repos;
+      }
+      return {
+        ...state,
+        users: fetchUserReposUsers,
+      };
   }
   return state;
 };

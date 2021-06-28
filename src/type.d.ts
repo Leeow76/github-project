@@ -53,6 +53,7 @@ interface User {
     private_repos: number;
     collaborators: number;
   };
+  repos: [];
 }
 
 // type DropdownState = {
