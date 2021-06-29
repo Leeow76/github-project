@@ -35,43 +35,46 @@ const addTokenIfExists = () => {
 // User list actions
 const searchUsersBaseUrl = "https://api.github.com/search/users?";
 
-export const fetchUsers = () => async (dispatch: Dispatch<any>) => {
-  dispatch(fetchUsersLoading());
-  let settings: any = {
-    method: "GET",
-    headers: {
-      Authorization: addTokenIfExists(),
-    },
-  };
-  try {
-    const data = await (
-      await fetch(
-        searchUsersBaseUrl +
-          new URLSearchParams({
-            q: "followers:>=0",
-            s: "followers",
-            type: "Users",
-            per_page: "10",
-            page: "1",
-          }).toString(),
-        settings
-      )
-    ).json();
-    if (data.message !== "Not Found") {
-      const users = data.items;
-      dispatch(fetchUsersSuccess(users));
-      // Fetch user repos
-      users.forEach((user: User) => {
-        dispatch(fetchUserRepos(user.login));
-      });
-    } else {
-      throw new Error("Could not fetch users!");
+// Fetch user list
+export const fetchUsers =
+  (query: string, sort: string) => async (dispatch: Dispatch<any>) => {
+    dispatch(fetchUsersLoading());
+    let settings: any = {
+      method: "GET",
+      headers: {
+        Authorization: addTokenIfExists(),
+      },
+    };
+    try {
+      const data = await (
+        await fetch(
+          searchUsersBaseUrl +
+            new URLSearchParams({
+              q: query,
+              sort: sort,
+              type: "Users",
+              per_page: "10",
+              page: "1",
+            }).toString(),
+          settings
+        )
+      ).json();
+      if (data.message !== "Not Found") {
+        const users = data.items;
+        dispatch(fetchUsersSuccess(users));
+        // Fetch user repos
+        users.forEach((user: User) => {
+          dispatch(fetchUserRepos(user.login));
+        });
+      } else {
+        throw new Error("Could not fetch users!");
+      }
+    } catch (error) {
+      dispatch(fetchUsersError(error));
     }
-  } catch (error) {
-    dispatch(fetchUsersError(error));
-  }
-};
+  };
 
+// Fetch 3 single user repos for user list
 const fetchUserRepos = (user: string) => async (dispatch: Dispatch<any>) => {
   let settings: any = {
     method: "GET",
@@ -82,7 +85,7 @@ const fetchUserRepos = (user: string) => async (dispatch: Dispatch<any>) => {
   try {
     const data = await (
       await fetch(
-        `https://api.github.com/users/${user}/repos?per_page=3&page=99`,
+        `https://api.github.com/users/${user}/repos?per_page=3&page=1`,
         settings
       )
     ).json();

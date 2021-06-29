@@ -1,10 +1,10 @@
-import React from 'react';
-import UserList from './components/UserList/UserList';
-import './App.css';
+import React from "react";
+import UserList from "./components/UserList/UserList";
+import "./App.scss";
 
 function App() {
   return (
-    <div className="App">
+    <div className="container">
       <UserList />
     </div>
   );

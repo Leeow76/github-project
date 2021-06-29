@@ -1,0 +1,10 @@
+@import-normalize;
+
+@import "./styles/typography";
+@import "./styles/spacing";
+@import "./styles/colors";
+
+.container {
+  max-width: 768px;
+  margin: auto;
+}

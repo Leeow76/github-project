@@ -1,0 +1,8 @@
+@import "../../styles/spacing";
+
+.UserList {
+  padding: $gutter;
+  list-style: none;
+  background: #ececec;
+  border-radius: 0.5rem;
+}
