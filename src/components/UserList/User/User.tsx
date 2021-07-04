@@ -29,20 +29,20 @@ export default function User({ user }: Props): ReactElement {
   return (
     <li className={styles.User}>
       <a
-        className={styles.User_image}
+        className={styles.User__image}
         target="_blank"
         rel="noreferrer"
         href={html_url}
       >
         <img src={avatar_url} title={login} alt={login} />
       </a>
-      <div className={styles.User_info}>
+      <div className={styles.User__info}>
         <a target="_blank" rel="noreferrer" href={html_url}>
           {login}
         </a>
         <p>{type}</p>
       </div>
-      <div className={styles.User_repos}>
+      <div className={styles.User__repos}>
         <h3>User repos</h3>
         {userRepos}
       </div>

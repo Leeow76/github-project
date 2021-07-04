@@ -34,8 +34,8 @@ export default function UserList(): ReactElement {
   }
 
   return (<>
-    <UserSearch search={(searchValue: string) => dispatch(usersActions.fetchUsers(searchValue, "best_match"))} />
     <ul className={styles.UserList}>
+      <UserSearch search={(searchValue: string) => dispatch(usersActions.fetchUsers(searchValue, "best_match"))} />
       {usersStatus === "loading" && <p>LOADING...</p>}
       {usersStatus === "failed" && <p>{usersError}</p>}
       {usersStatus === "success" && users.length > 0 && <>{listedUsers}</>}

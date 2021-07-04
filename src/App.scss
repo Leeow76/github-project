@@ -1,10 +1,9 @@
 @import-normalize;
 
+@import "./styles/responsive";
+@import "./styles/colors";
+@import "./styles/common";
 @import "./styles/typography";
 @import "./styles/spacing";
-@import "./styles/colors";
-
-.container {
-  max-width: 768px;
-  margin: auto;
-}
+@import "./styles/forms";
+@import "./styles/buttons";

@@ -1,0 +1,9 @@
+*:focus-visible {
+    border-radius: 0.5rem;
+    outline: $theme-primary auto 1px;
+}
+
+.container {
+    max-width: 768px;
+    margin: auto;
+}

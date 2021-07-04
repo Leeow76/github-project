@@ -1,5 +1,7 @@
 import { ReactElement, useState } from 'react'
 
+import styles from './UserSearch.module.scss'
+
 interface Props {
     search: Function
 }
@@ -7,7 +9,7 @@ interface Props {
 export default function UserSearch({ search }: Props): ReactElement {
     const [searchValue, setSearchValue] = useState('');
     return (
-        <>
+        <div className={styles.UserSearch + " text-field text-field--with-button"}>
             <input
                 type="text"
                 onChange={(e) => setSearchValue(e.target.value)}
@@ -17,7 +19,9 @@ export default function UserSearch({ search }: Props): ReactElement {
                     search(searchValue);
                 }
             }} />
-          <button disabled={!searchValue} onClick={() => search(searchValue)}>Search</button>
-        </>
+            <button className="button button--with-icon" disabled={!searchValue} onClick={() => search(searchValue)}>
+                <span className="material-icons">search</span>
+            </button>
+        </div>
     )
 }

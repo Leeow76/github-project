@@ -1,0 +1,22 @@
+button {
+    background-color: $theme-primary;
+    color: #fff;
+    min-height: $input-height;
+    padding: 0 $gutter;
+    border-radius: 0.5rem;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    &[disabled] {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+}
+
+.button {
+    &--with-icon {
+        border-radius: 100%;
+        padding: 0;
+        width: $input-height;
+    }    
+}
