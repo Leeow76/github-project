@@ -1,21 +1,33 @@
-button {
-    background-color: $theme-primary;
-    color: #fff;
+.button {
     min-height: $input-height;
     padding: 0 $gutter;
     border-radius: 0.5rem;
     border: none;
     font-weight: 700;
     cursor: pointer;
+    background-color: $gray;
+    transition: background-color $theme-transition;
+
+    &:hover,
+    &:focus {
+        background-color: darken($gray, 20%)
+    }
+
     &[disabled] {
         cursor: not-allowed;
         opacity: 0.5;
     }
-}
 
-.button {
-    &--with-icon {
-        border-radius: 100%;
+    &__primary {
+        color: #fff;
+        background-color: $theme-primary;
+        &:hover,
+        &:focus {
+            background-color: darken($theme-primary, 20%);
+        }    
+    }
+
+    &__withIcon {
         padding: 0;
         width: $input-height;
     }    

@@ -1,19 +1,17 @@
-@import "../../../styles/spacing";
-@import "../../../styles/colors";
-@import "../../../styles/responsive";
+@import "../../../styles/variables";
 
-.User {
+.item {
   margin-bottom: 1rem;
   padding: 1rem;
   background: #fff;
   border-radius: 0.5rem;
   &__image {
-    max-width: 120px;
+    width: 120px;
     display: block;
     margin: 0 auto $gutter;
     img {
       display: block;
-      max-width: 100%;
+      width: 100%;
       border-radius: 100%;
     }
   }
@@ -34,19 +32,20 @@
     }
   }
   &__repos {
-    p {
-      margin-bottom: $gutter / 2;
-      margin-right: $gutter / 2;
-      background-color: $background-gray;
-      border-radius: 0.5rem;
-      padding: ($gutter / 2) $gutter;
-      display: inline-block;
-    }
+    margin-right: -$gutter / 2;
+  }
+  &__repo {
+    margin-bottom: $gutter / 2;
+    margin-right: $gutter / 2;
+    background-color: $background-gray;
+    border-radius: 0.5rem;
+    padding: ($gutter / 2) $gutter;
+    display: inline-block;    
   }
 }
 
 @media only screen and (min-width: $screen__s) {
-  .User {
+  .item {
     display: flex;
     justify-content: space-between;
     &__image {
@@ -71,9 +70,9 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      p {
-        margin-right: 0;
-      }
+    }
+    &__repos {
+      margin-right: 0;
     }
   }
 }

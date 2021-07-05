@@ -1,8 +1,28 @@
-@import "../../../styles/spacing";
+@import "../../../styles/variables";
 
-.UserSearch {
+.field {
     padding: 0;
-    margin: 0 auto $gutter;
+    margin: $gutter auto ($gutter * 2);
     box-sizing: border-box;
     max-width: 320px;
+}
+
+.input {
+    padding-right: $input-height;
+    &__clearable {
+        padding-right: $input-height * 2;
+    }
+}
+
+.title {
+    border-bottom: 1px solid $gray;
+    margin-bottom: $gutter;
+    padding-bottom: $gutter;
+}
+
+.clear {
+    background: transparent;
+    color: $text-primary;
+    position: absolute;
+    right: 36px;
 }

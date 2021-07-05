@@ -1,9 +1,8 @@
 @import-normalize;
 
-@import "./styles/responsive";
-@import "./styles/colors";
+@import "./styles/variables";
 @import "./styles/common";
 @import "./styles/typography";
-@import "./styles/spacing";
 @import "./styles/forms";
 @import "./styles/buttons";
+@import "./styles/messages";

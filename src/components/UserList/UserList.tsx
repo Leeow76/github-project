@@ -27,20 +27,31 @@ export default function UserList(): ReactElement {
   }, [dispatch]);
 
   let listedUsers = null;
-  if (usersStatus === "success") {
+  if (usersStatus === "success" && users) {
     listedUsers = users.map((user: User, index: number) => {
       return <User key={index} user={user} />;
     });
   }
 
-  return (<>
-    <ul className={styles.UserList}>
-      <UserSearch search={(searchValue: string) => dispatch(usersActions.fetchUsers(searchValue, "best_match"))} />
-      {usersStatus === "loading" && <p>LOADING...</p>}
-      {usersStatus === "failed" && <p>{usersError}</p>}
-      {usersStatus === "success" && users.length > 0 && <>{listedUsers}</>}
-      {usersStatus === "success" && users.length === 0 && <p>No users found</p>}
-    </ul>
+  return (
+    <>
+      <ul className={styles.list}>
+        <UserSearch
+          search={(searchValue: string, searchSort: string) =>
+            dispatch(usersActions.fetchUsers(searchValue, searchSort))
+          }
+        />
+        {usersStatus === "loading" && (
+          <div className="message__neutral">LOADING...</div>
+        )}
+        {usersStatus === "failed" && (
+          <div className="message__neutral">{usersError}</div>
+        )}
+        {usersStatus === "success" && users.length > 0 && <>{listedUsers}</>}
+        {usersStatus === "success" && users.length === 0 && (
+          <div className="message__neutral">No users found</div>
+        )}
+      </ul>
     </>
   );
 }

@@ -1,5 +1,11 @@
 # Practice project using github public API
 
+## Css following javascript-friendly BEM (https://medium.com/trabe/a-more-javascript-friendly-bem-naming-convention-75c7f01ff736)
+
+Blocks <PascalCase>: VideoPlayer
+Elements <_camelCase>: VideoPlayer_buttonsContainer
+Modifiers <__camelCase>: VideoPlayer___isLoading
+
 ### `yarn start`
 
 Runs the app in the development mode.\
