@@ -15,7 +15,12 @@ input {
     align-items: center;
     &__withButton {
         position: relative;
+        input {
+            margin-right: $input-height;
+            border-radius: 0.5rem 0 0 0.5rem;
+        }
         button:last-child {
+            min-height: $input-height;
             position: absolute;
             right: 0;
         }

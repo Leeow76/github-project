@@ -8,7 +8,7 @@ import User from "./User/User";
 import UserSearch from "./UserSearch/UserSearch";
 
 export default function UserList(): ReactElement {
-  // Redux state data for subcomponents
+  // Redux state data for sub-components
   const users: User[] = useSelector(
     (state: RootStateOrAny) => state.usersReducer.users
   );
@@ -18,10 +18,13 @@ export default function UserList(): ReactElement {
   const usersStatus: string = useSelector(
     (state: RootStateOrAny) => state.usersReducer.usersStatus
   );
+  const viewMode: "grid" | "list" = useSelector(
+    (state: RootStateOrAny) => state.usersReducer.viewMode
+  );
 
   // Redux dispatches
-  // Fetch most followed users
   const dispatch: Dispatch<any> = useDispatch();
+  // Fetch most followed users
   useEffect(() => {
     dispatch(usersActions.fetchUsers("followers:>=0", "followers"));
   }, [dispatch]);
@@ -34,13 +37,17 @@ export default function UserList(): ReactElement {
   }
 
   return (
-    <>
-      <ul className={styles.list}>
-        <UserSearch
-          search={(searchValue: string, searchSort: string) =>
-            dispatch(usersActions.fetchUsers(searchValue, searchSort))
-          }
-        />
+    <div className={styles.wrapper}>
+      <UserSearch
+        search={(searchValue: string, searchSort: string) =>
+          dispatch(usersActions.fetchUsers(searchValue, searchSort))
+        }
+        setViewMode={(viewMode: string) =>
+          dispatch(usersActions.setViewMode(viewMode))
+        }
+        viewMode={viewMode}
+      />
+      <ul className={`${styles[viewMode]}`}>
         {usersStatus === "loading" && (
           <div className="message__neutral">LOADING...</div>
         )}
@@ -52,6 +59,6 @@ export default function UserList(): ReactElement {
           <div className="message__neutral">No users found</div>
         )}
       </ul>
-    </>
+    </div>
   );
 }

@@ -1,34 +1,49 @@
 .button {
-    min-height: $input-height;
     padding: 0 $gutter;
     border-radius: 0.5rem;
     border: none;
     font-weight: 700;
     cursor: pointer;
     background-color: $gray;
-    transition: background-color $theme-transition;
-
-    &:hover,
-    &:focus {
-        background-color: darken($gray, 20%)
-    }
+    transition: all $theme-transition;
 
     &[disabled] {
-        cursor: not-allowed;
+        cursor: unset;
         opacity: 0.5;
     }
 
     &__primary {
         color: #fff;
-        background-color: $theme-primary;
-        &:hover,
-        &:focus {
-            background-color: darken($theme-primary, 20%);
-        }    
+        background-color: $theme-primary;  
+    }
+    
+    &__transparent {
+        color: $text-primary;
+        background: transparent; 
     }
 
     &__withIcon {
+        border-radius: 0 0.5rem 0.5rem 0;
         padding: 0;
+        line-height: 0.7;
         width: $input-height;
+    }    
+}
+
+@media screen and (min-width: $screen__s) {
+    .button {
+        &:not([disabled]):hover {
+            background-color: darken($gray, 20%)
+        }
+        &__primary {
+            &:not([disabled]):hover {
+                background-color: darken($theme-primary, 20%);
+            }
+        }
+        &__transparent {
+            &:not([disabled]):hover {
+                background-color: transparent;
+            }
+        }
     }    
 }

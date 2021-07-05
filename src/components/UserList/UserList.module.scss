@@ -1,8 +1,18 @@
 @import "../../styles/variables";
 
-.list {
+.wrapper {
   padding: $gutter;
-  list-style: none;
   background: #ececec;
   border-radius: 0.5rem;
+}
+
+.list,
+.grid {
+  list-style: none;
+  padding: 0;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+  column-gap: $gutter;
 }

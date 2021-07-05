@@ -102,3 +102,11 @@ const fetchUserRepos = (user: string) => async (dispatch: Dispatch<any>) => {
     dispatch(fetchUsersError(error));
   }
 };
+
+// Set view mode
+export const setViewMode = (viewMode: string) => (dispatch: Dispatch<any>) => {
+      dispatch({
+        type: actionTypes.SET_VIEW_MODE,
+        viewMode: viewMode,
+      });
+};

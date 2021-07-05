@@ -4,22 +4,70 @@ import styles from "./UserSearch.module.scss";
 
 interface Props {
   search: Function;
+  setViewMode: Function;
+  viewMode: "grid" | "list";
 }
 
-export default function UserSearch({ search }: Props): ReactElement {
+export default function UserSearch({
+  search,
+  viewMode,
+  setViewMode,
+}: Props): ReactElement {
   const [searchValue, setSearchValue] = useState("");
   const [searchedString, setSearchedString] = useState("");
 
-  const searchUsers = (query: string) => {
-    // Empty string searches most followed users
-    if (query === "") {
+  const searchUsers = (searchValue: string) => {
+    // Empty string searches for most followed users
+    if (searchValue === "") {
       setSearchedString("");
       search("followers:>=0", "followers");
     } else {
-      setSearchedString(query);
-      search(query, "best_match");
+      setSearchedString(searchValue);
+      search(searchValue, "best_match");
     }
   };
+
+  let clearButton = null;
+  if (searchValue !== "") {
+    clearButton = (
+      <button
+        className={`button button__withIcon button__transparent ${styles.clear}`}
+        onClick={() => setSearchValue("")}
+      >
+        <span className="material-icons">close</span>
+      </button>
+    );
+  }
+
+  let searchTitle = null;
+  if (searchedString) {
+    searchTitle = (
+      <h3 className={styles.title}>Search results for "{searchedString}"</h3>
+    );
+  } else {
+    searchTitle = <h3 className={styles.title}>Most popular GitHub users</h3>;
+  }
+
+  let viewModes = null;
+  let gridStyles = null;
+  let listStyles = null;
+  if (viewMode === "list") {
+    gridStyles = `button ${styles.modeButton}`;
+    listStyles = `button ${styles.modeButton} ${styles.modeButton__active}`;
+  } else {
+    gridStyles = `button ${styles.modeButton} ${styles.modeButton__active}`;
+    listStyles = `button ${styles.modeButton}`;
+  }
+  viewModes = (
+    <div className={styles.viewModes}>
+      <button onClick={() => setViewMode("list")} className={listStyles}>
+        <span className="material-icons-round">view_stream</span>
+      </button>
+      <button onClick={() => setViewMode("grid")} className={gridStyles}>
+        <span className="material-icons-round">grid_view</span>
+      </button>
+    </div>
+  );
 
   return (
     <>
@@ -39,28 +87,19 @@ export default function UserSearch({ search }: Props): ReactElement {
             }
           }}
         />
-        {searchValue !== "" && (
-          <button
-            className={styles.clear + " button button__withIcon"}
-            onClick={() => setSearchValue("")}
-          >
-            <span className="material-icons">close</span>
-          </button>
-        )}
+        {clearButton}
         <button
+          disabled={searchValue === searchedString}
           className="button button__withIcon button__primary"
           onClick={() => searchUsers(searchValue)}
         >
           <span className="material-icons">search</span>
         </button>
       </div>
-      {!searchedString && (
-        <h3 className={styles.title}>Most popular GitHub users:</h3>
-      )}
-      {searchedString && (
-        <h3 className={styles.title}>Search results for "{searchedString}":</h3>
-      )}
-      <button className="button">test</button>
+      <div className={styles.toolbar}>
+        {searchTitle}
+        {viewModes}
+      </div>
     </>
   );
 }

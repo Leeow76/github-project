@@ -43,7 +43,7 @@ export default function User({ user }: Props): ReactElement {
         <p>{type}</p>
       </div>
       <div className={styles.item__repos}>
-        <h3>User repos</h3>
+        <h3>User repositories</h3>
         {userRepos}
       </div>
     </li>

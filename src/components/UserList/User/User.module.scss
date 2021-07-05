@@ -1,12 +1,12 @@
 @import "../../../styles/variables";
 
 .item {
-  margin-bottom: 1rem;
-  padding: 1rem;
+  margin-bottom: $gutter;
+  padding: $gutter;
   background: #fff;
   border-radius: 0.5rem;
   &__image {
-    width: 120px;
+    width: 145px;
     display: block;
     margin: 0 auto $gutter;
     img {
@@ -46,33 +46,40 @@
 
 @media only screen and (min-width: $screen__s) {
   .item {
-    display: flex;
-    justify-content: space-between;
-    &__image {
-      margin-right: $gutter;
-      margin-bottom: 0;
-      padding-right: $gutter;
-      display: flex;
-      align-items: center;
-      border-right: 1px solid $background-gray;
-    }
-    &__info {
-      margin-right: $gutter;
-      flex: 2;
-      border-right: 1px solid $background-gray;
-      text-align: left;
-      p:last-child {
-        border-bottom: none;
+    [class^="UserList_list"] > & {
+      display: grid;
+      grid-template-columns: auto 1fr 1fr;
+      .item__image {
+        margin-right: $gutter;
+        margin-bottom: 0;
+        padding-right: $gutter;
+        display: flex;
+        align-items: center;
+        border-right: 1px solid $background-gray;
+      }
+      .item__info {
+        margin-right: $gutter;
+        padding-right: $gutter;
+        flex: 2;
+        border-right: 1px solid $background-gray;
+        text-align: left;
+        p:last-child {
+          border-bottom: none;
+        }
+      }
+      .item__repos {
+        flex: 1.5;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-right: 0;
+      }
+      .item__repo {
+        margin-right: 0;
       }
     }
-    &__repos {
-      flex: 1.5;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-    &__repos {
-      margin-right: 0;
+    [class^="UserList_grid"] > & {
+      // margin-bottom: 0;
     }
   }
 }

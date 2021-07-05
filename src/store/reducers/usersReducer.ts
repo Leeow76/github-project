@@ -6,12 +6,14 @@ export interface UserState {
   users: User[];
   usersError: string;
   usersStatus: "idle" | "loading " | "success" | "failed";
+  viewMode: "list" | "grid";
 }
 
 const usersState: UserState = {
   users: [],
   usersError: "",
   usersStatus: "idle",
+  viewMode: "list"
 };
 
 const usersReducer = (state = usersState, action: AnyAction) => {
@@ -37,13 +39,18 @@ const usersReducer = (state = usersState, action: AnyAction) => {
       let fetchUserReposUsers = [...state.users];
       const targetUser = fetchUserReposUsers.find(
         (user) => user.login === action.user
-      );
-      if (targetUser) {
-        targetUser["repos"] = action.repos;
-      }
+        );
+        if (targetUser) {
+          targetUser["repos"] = action.repos;
+        }
+        return {
+          ...state,
+          users: fetchUserReposUsers,
+        };
+    case actionTypes.SET_VIEW_MODE:
       return {
         ...state,
-        users: fetchUserReposUsers,
+        viewMode: action.viewMode
       };
   }
   return state;
