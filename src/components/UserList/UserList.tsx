@@ -2,7 +2,7 @@ import { ReactElement, useEffect } from "react";
 import { Dispatch } from "redux";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 
-import * as usersActions from "../../store/actions/usersActions";
+import * as userListActions from "../../store/actions/userListActions";
 import styles from "./UserList.module.scss";
 import User from "./User/User";
 import UserSearch from "./UserSearch/UserSearch";
@@ -10,24 +10,27 @@ import UserSearch from "./UserSearch/UserSearch";
 export default function UserList(): ReactElement {
   // Redux state data for sub-components
   const users: User[] = useSelector(
-    (state: RootStateOrAny) => state.usersReducer.users
+    (state: RootStateOrAny) => state.userListReducer.users
   );
   const usersError: string = useSelector(
-    (state: RootStateOrAny) => state.usersReducer.usersError
+    (state: RootStateOrAny) => state.userListReducer.usersError
   );
   const usersStatus: string = useSelector(
-    (state: RootStateOrAny) => state.usersReducer.usersStatus
+    (state: RootStateOrAny) => state.userListReducer.usersStatus
   );
   const viewMode: "grid" | "list" = useSelector(
-    (state: RootStateOrAny) => state.usersReducer.viewMode
+    (state: RootStateOrAny) => state.userListReducer.viewMode
   );
 
   // Redux dispatches
   const dispatch: Dispatch<any> = useDispatch();
   // Fetch most followed users
   useEffect(() => {
-    dispatch(usersActions.fetchUsers("followers:>=0", "followers"));
-  }, [dispatch]);
+    // Update only no users already in redux state
+    if (users.length < 1) {
+      dispatch(userListActions.fetchUsers("followers:>=0", "followers"));
+    }
+  }, []);
 
   let listedUsers = null;
   if (usersStatus === "success" && users) {
@@ -40,10 +43,10 @@ export default function UserList(): ReactElement {
     <div className={styles.wrapper}>
       <UserSearch
         search={(searchValue: string, searchSort: string) =>
-          dispatch(usersActions.fetchUsers(searchValue, searchSort))
+          dispatch(userListActions.fetchUsers(searchValue, searchSort))
         }
         setViewMode={(viewMode: string) =>
-          dispatch(usersActions.setViewMode(viewMode))
+          dispatch(userListActions.setViewMode(viewMode))
         }
         viewMode={viewMode}
       />

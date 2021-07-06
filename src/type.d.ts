@@ -54,13 +54,5 @@ interface User {
     collaborators: number;
   };
   repos: [];
+  orgs: [];
 }
-
-// type DropdownState = {
-//   dropdownContentOpened: boolean;
-// };
-
-// type DropdownAction = {
-//   type: string;
-//   dropdownContentOpened: boolean;
-// };

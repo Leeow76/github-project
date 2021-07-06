@@ -1,4 +1,5 @@
 import { ReactElement } from "react";
+import { Link } from "react-router-dom";
 
 import styles from "./User.module.scss";
 
@@ -8,7 +9,7 @@ interface Props {
 
 export default function User({ user }: Props): ReactElement {
   // Props
-  const { login, html_url, avatar_url, type, repos } = user;
+  const { login, avatar_url, type, repos } = user;
 
   let userRepos = undefined;
 
@@ -28,18 +29,11 @@ export default function User({ user }: Props): ReactElement {
 
   return (
     <li className={styles.item}>
-      <a
-        className={styles.item__image}
-        target="_blank"
-        rel="noreferrer"
-        href={html_url}
-      >
+      <span className={styles.item__image}>
         <img src={avatar_url} title={login} alt={login} />
-      </a>
+      </span>
       <div className={styles.item__info}>
-        <a target="_blank" rel="noreferrer" href={html_url}>
-          {login}
-        </a>
+        <Link to={login}>{login}</Link>
         <p>{type}</p>
       </div>
       <div className={styles.item__repos}>
