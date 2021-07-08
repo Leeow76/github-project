@@ -31,7 +31,7 @@ export default function UserSearch({
   if (searchValue !== "") {
     clearButton = (
       <button
-        className={`button button__withIcon button__transparent ${styles.clear}`}
+        className={`button button_formButton button_transparent ${styles.clear}`}
         onClick={() => setSearchValue("")}
       >
         <span className="material-icons">close</span>
@@ -42,10 +42,10 @@ export default function UserSearch({
   let searchTitle = null;
   if (searchedString) {
     searchTitle = (
-      <h3 className={styles.title}>Search results for "{searchedString}"</h3>
+      <h1 className={styles.title}>Search results for "{searchedString}"</h1>
     );
   } else {
-    searchTitle = <h3 className={styles.title}>Most popular GitHub users</h3>;
+    searchTitle = <h1 className={styles.title}>Most popular GitHub users</h1>;
   }
 
   let viewModes = null;
@@ -90,7 +90,7 @@ export default function UserSearch({
         {clearButton}
         <button
           disabled={searchValue === searchedString}
-          className="button button__withIcon button__primary"
+          className="button button_formButton button_primary"
           onClick={() => searchUsers(searchValue)}
         >
           <span className="material-icons">search</span>

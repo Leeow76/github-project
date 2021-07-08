@@ -1,33 +1,58 @@
 .button {
-    padding: 0 $gutter;
+    padding: $gutter / 4 $gutter;
     border-radius: 0.5rem;
     border: none;
     font-weight: 700;
     cursor: pointer;
     background-color: $gray;
     transition: all $theme-transition;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 0.75em;
+
+    * {
+        vertical-align: middle;
+    }
+
+    & > a {
+        color: inherit;
+        text-decoration: inherit;
+    }
 
     &[disabled] {
         cursor: unset;
         opacity: 0.5;
     }
 
-    &__primary {
+    &_primary {
         color: #fff;
         background-color: $theme-primary;  
     }
+
+    &_secondary {
+        color: $text-primary;
+        background-color: $theme-secondary;  
+    }
     
-    &__transparent {
+    &_transparent {
         color: $text-primary;
         background: transparent; 
     }
 
-    &__withIcon {
+    &_formButton {
         border-radius: 0 0.5rem 0.5rem 0;
         padding: 0;
         line-height: 0.7;
         width: $input-height;
-    }    
+    }
+
+    &_iconAndText {
+        padding-left: $gutter / 2;
+    }
+
+    &_textAndIcon {
+        padding-right: $gutter / 2;
+    }
 }
 
 @media screen and (min-width: $screen__s) {
@@ -35,12 +60,20 @@
         &:not([disabled]):hover {
             background-color: darken($gray, 20%)
         }
-        &__primary {
+
+        &_primary {
             &:not([disabled]):hover {
                 background-color: darken($theme-primary, 20%);
             }
         }
-        &__transparent {
+
+        &_secondary {
+            &:not([disabled]):hover {
+                background-color: darken($theme-secondary, 20%);
+            }
+        }
+
+        &_transparent {
             &:not([disabled]):hover {
                 background-color: transparent;
             }

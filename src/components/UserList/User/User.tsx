@@ -20,9 +20,9 @@ export default function User({ user }: Props): ReactElement {
   } else if (repos.length > 0) {
     userRepos = repos.map((repo, index) => {
       return (
-        <p className={styles.item__repo + " textSmall"} key={index}>
+        <span className={styles.item__repo + " textSmall"} key={index}>
           {repo["name"]}
-        </p>
+        </span>
       );
     });
   }
@@ -30,10 +30,14 @@ export default function User({ user }: Props): ReactElement {
   return (
     <li className={styles.item}>
       <span className={styles.item__image}>
-        <img src={avatar_url} title={login} alt={login} />
+        <Link to={login}>
+          <img src={avatar_url} title={login} alt={login} />
+        </Link>
       </span>
       <div className={styles.item__info}>
-        <Link to={login}>{login}</Link>
+        <h3>
+          <Link to={login}>{login}</Link>
+        </h3>
         <p>{type}</p>
       </div>
       <div className={styles.item__repos}>

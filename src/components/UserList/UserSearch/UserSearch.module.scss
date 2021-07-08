@@ -17,7 +17,6 @@
 
 .title {
     margin-bottom: 0;
-    margin-right: $gutter;
 }
 
 .toolbar {
@@ -30,7 +29,7 @@
 }
 
 .viewModes {
-    min-width: $input-height * 2 + 8px;
+    display: none;
 }
 .modeButton {
     height: $input-height;
@@ -50,4 +49,14 @@
     position: absolute;
     right: $input-height;
     min-height: $input-height;
+}
+
+@media only screen and (min-width: $screen__xs) {
+    .viewModes{
+        min-width: $input-height * 2 + 8px;
+        display: block;
+    }
+    .title {
+        margin-right: $gutter;
+    }
 }

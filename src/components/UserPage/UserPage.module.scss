@@ -1,0 +1,78 @@
+@import "../../styles/variables";
+
+.title {
+  border-bottom: 1px solid $gray;
+  margin: $gutter 0;
+  padding-bottom: $gutter;
+}
+
+.user {
+  background: #fff;
+  padding: $gutter;
+  border-radius: $gutter / 2;
+}
+
+.info {
+  width: 100%;
+}
+
+.name {
+  margin-bottom: 0;
+}
+
+.image {
+  max-width: 100%;
+  border-radius: $gutter / 2;
+  display: block;
+  margin: 0 auto $gutter;
+}
+
+.orgs {
+  border-top: 1px solid $gray;
+  padding-top: $gutter;
+}
+
+.orgList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  column-gap: $gutter;
+}
+
+.org {
+  margin-bottom: $gutter / 2;
+  text-decoration: none;
+  color: $text-primary;
+  img {
+    margin-right: $gutter / 2;
+    width: 32px;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.repos {
+  border-top: 1px solid $gray;
+  padding: $gutter 0;
+}
+
+.repo {
+  margin-bottom: $gutter / 2;
+  margin-right: $gutter / 2;
+  background-color: $background-gray;
+  border-radius: 0.5rem;
+  padding: ($gutter / 2) $gutter;
+  display: inline-block;
+}
+
+@media only screen and (min-width: $screen__s) {
+  .user {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .image {
+    margin: 0 $gutter 0 0;
+    max-width: 45%;
+  }
+}
