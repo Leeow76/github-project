@@ -51,6 +51,25 @@
     min-height: $input-height;
 }
 
+.recentSearches {
+    text-align: center;
+    margin-bottom: $gutter / 2;
+    h4 {
+        margin-bottom: $gutter / 2;
+    }
+}
+.recentSearch {
+    background: $theme-secondary;
+    padding: $gutter / 4 $gutter;
+    border-radius: $gutter / 2;
+    margin: 0 $gutter / 2 $gutter / 2 0;
+    display: inline-block;
+    cursor: pointer;
+    &:last-child {
+        margin-right: 0;
+    }
+}
+
 @media only screen and (min-width: $screen__xs) {
     .viewModes{
         min-width: $input-height * 2 + 8px;
@@ -58,5 +77,14 @@
     }
     .title {
         margin-right: $gutter;
+    }
+}
+
+@media only screen and (min-width: $screen__s) {
+    .recentSearch {
+        transition: background-color $theme-transition;
+        &:hover {
+            background-color: darken($theme-secondary, 20%);
+        }
     }
 }

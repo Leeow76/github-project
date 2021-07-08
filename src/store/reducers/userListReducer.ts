@@ -7,13 +7,15 @@ export interface UserListState {
   usersError: string | null;
   usersStatus: "idle" | "loading " | "success" | "failed";
   viewMode: "list" | "grid";
+  latestSearch: string;
 }
 
 const userListState: UserListState = {
   users: [],
   usersError: null,
   usersStatus: "idle",
-  viewMode: "list"
+  viewMode: "list",
+  latestSearch: ""
 };
 
 const userListReducer = (state = userListState, action: AnyAction) => {
@@ -56,6 +58,11 @@ const userListReducer = (state = userListState, action: AnyAction) => {
       return {
         ...state,
         viewMode: action.viewMode
+      };
+    case actionTypes.SET_SEARCH_VALUE:
+      return {
+        ...state,
+        latestSearch: action.latestSearch
       };
 
   }

@@ -70,3 +70,11 @@ export const setViewMode = (viewMode: string) => (dispatch: Dispatch<any>) => {
     viewMode: viewMode,
   });
 };
+
+// Set last search value
+export const setLatestSearch = (latestSearch: string) => (dispatch: Dispatch<any>) => {
+  dispatch({
+    type: actionTypes.SET_SEARCH_VALUE,
+    latestSearch: latestSearch,
+  });
+};

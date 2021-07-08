@@ -8,7 +8,7 @@ import User from "./User/User";
 import UserSearch from "./UserSearch/UserSearch";
 
 export default function UserList(): ReactElement {
-  // Redux state data for sub-components
+  // REDUX STATE DATA
   const users: User[] = useSelector(
     (state: RootStateOrAny) => state.userListReducer.users
   );
@@ -21,9 +21,13 @@ export default function UserList(): ReactElement {
   const viewMode: "grid" | "list" = useSelector(
     (state: RootStateOrAny) => state.userListReducer.viewMode
   );
+  const latestSearch: string = useSelector(
+    (state: RootStateOrAny) => state.userListReducer.latestSearch
+  );
 
-  // Redux dispatches
+  // REDUX DISPATCHES
   const dispatch: Dispatch<any> = useDispatch();
+
   // Fetch most followed users
   useEffect(() => {
     // Update only no users already in redux state
@@ -31,6 +35,36 @@ export default function UserList(): ReactElement {
       dispatch(userListActions.fetchUsers("followers:>=0", "followers"));
     }
   }, []);
+
+  // Fetch users, save redux searched string and localStorage latest only search if manually entered value
+  const dispatchSearch = (
+    searchValue: string,
+    searchSort: string,
+    includeSearchString?: boolean
+  ) => {
+    dispatch(userListActions.fetchUsers(searchValue, searchSort));
+
+    if (includeSearchString) {
+      dispatch(userListActions.setLatestSearch(searchValue));
+      saveSearchToLocalStorage(searchValue);
+    } else {
+      dispatch(userListActions.setLatestSearch(""));
+    }
+  };
+
+  const saveSearchToLocalStorage = (search: string) => {
+    let recentSearches = [];
+    if (localStorage.getItem("recentSearches") !== null) {
+      recentSearches = JSON.parse(localStorage.getItem("recentSearches") || "");
+    }
+    if (!recentSearches.includes(search)) {
+      recentSearches.unshift(search);
+      if (recentSearches.length > 3) {
+        recentSearches.pop();
+      }
+    }
+    localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
+  };
 
   let listedUsers = null;
   if (usersStatus === "success" && users) {
@@ -42,12 +76,15 @@ export default function UserList(): ReactElement {
   return (
     <div className={styles.wrapper}>
       <UserSearch
-        search={(searchValue: string, searchSort: string) =>
-          dispatch(userListActions.fetchUsers(searchValue, searchSort))
-        }
+        search={(
+          searchValue: string,
+          searchSort: string,
+          includeSearchString: boolean = true
+        ) => dispatchSearch(searchValue, searchSort, includeSearchString)}
         setViewMode={(viewMode: string) =>
           dispatch(userListActions.setViewMode(viewMode))
         }
+        latestSearch={latestSearch}
         viewMode={viewMode}
       />
       <ul className={`${styles[viewMode]}`}>

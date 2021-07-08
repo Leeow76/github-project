@@ -8,12 +8,12 @@ import styles from "./UserPage.module.scss";
 import { classes } from "istanbul-lib-coverage";
 
 export default function UserPage(): ReactElement {
-  // Redux state data for sub-components
+  // REDUX STATE DATA
   const user: User = useSelector(
     (state: RootStateOrAny) => state.userPageReducer.userPageUser
   );
 
-  // Redux dispatches
+  // REDUX DISPATCHES
   const dispatch: Dispatch<any> = useDispatch();
 
   // Fetch user based on url path
