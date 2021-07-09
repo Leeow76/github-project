@@ -81,9 +81,10 @@ export default function UserSearch({
   if (recentSearches) {
     const parsedData = JSON.parse(localStorage.getItem("recentSearches") || "");
     recentSearchesCount = parsedData.length;
-    const mappedSearches = parsedData.map((search: string) => {
+    const mappedSearches = parsedData.map((search: string, index: number) => {
       return (
         <span
+          key={index}
           onClick={() => searchUsers(search)}
           className={`${styles.recentSearch} textSmall`}
         >

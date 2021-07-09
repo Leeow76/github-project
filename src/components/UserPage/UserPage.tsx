@@ -5,9 +5,10 @@ import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 
 import * as usersPageActions from "../../store/actions/userPageActions";
 import styles from "./UserPage.module.scss";
-import { classes } from "istanbul-lib-coverage";
+import { useDocTitle } from "../../hooks/useDocTitle";
 
 export default function UserPage(): ReactElement {
+  const [doctitle, setDocTitle] = useDocTitle();
   // REDUX STATE DATA
   const user: User = useSelector(
     (state: RootStateOrAny) => state.userPageReducer.userPageUser
@@ -17,10 +18,12 @@ export default function UserPage(): ReactElement {
   const dispatch: Dispatch<any> = useDispatch();
 
   // Fetch user based on url path
-  let { pathname } = useLocation();
+  const { pathname } = useLocation();
+  const formattedPathname = pathname.replace(/^\/+/, "");
   useEffect(() => {
-    dispatch(usersPageActions.fetchUser(pathname.replace(/^\/+/, "")));
-  }, [dispatch, pathname]);
+    dispatch(usersPageActions.fetchUser(formattedPathname));
+    setDocTitle(`User "${formattedPathname}"`);
+  }, []);
 
   let userRepos = undefined;
   if (!user || !user.repos) {
@@ -28,9 +31,9 @@ export default function UserPage(): ReactElement {
   } else if (user.repos.length === 0) {
     userRepos = <p>No repos to display</p>;
   } else if (user.repos.length > 0) {
-    userRepos = user.repos.map((repo: any, index) => {
+    userRepos = user.repos.map((repo: any) => {
       return (
-        <p className={`${styles.repo} textSmall`} key={index}>
+        <p className={`${styles.repo} textSmall`} key={repo.id}>
           {repo.name}
         </p>
       );

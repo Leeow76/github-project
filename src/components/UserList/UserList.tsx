@@ -6,6 +6,7 @@ import * as userListActions from "../../store/actions/userListActions";
 import styles from "./UserList.module.scss";
 import User from "./User/User";
 import UserSearch from "./UserSearch/UserSearch";
+import { useDocTitle } from "../../hooks/useDocTitle";
 
 export default function UserList(): ReactElement {
   // REDUX STATE DATA
@@ -25,13 +26,21 @@ export default function UserList(): ReactElement {
     (state: RootStateOrAny) => state.userListReducer.latestSearch
   );
 
+  const defaultPageTitle = "Most followed GitHub users";
+
+  // Set document title to latest search if it exists in redux
+  const [doctitle, setDocTitle] = useDocTitle(
+    latestSearch ? `Search results for "${latestSearch}"` : defaultPageTitle
+  );
+
   // REDUX DISPATCHES
   const dispatch: Dispatch<any> = useDispatch();
 
-  // Fetch most followed users
+  // Initially fetch most followed users, set initial document title
   useEffect(() => {
     // Update only no users already in redux state
     if (users.length < 1) {
+      setDocTitle(defaultPageTitle);
       dispatch(userListActions.fetchUsers("followers:>=0", "followers"));
     }
   }, []);
@@ -47,8 +56,10 @@ export default function UserList(): ReactElement {
     if (includeSearchString) {
       dispatch(userListActions.setLatestSearch(searchValue));
       saveSearchToLocalStorage(searchValue);
+      setDocTitle(`Search results for "${searchValue}"`);
     } else {
       dispatch(userListActions.setLatestSearch(""));
+      setDocTitle(defaultPageTitle);
     }
   };
 
@@ -68,8 +79,8 @@ export default function UserList(): ReactElement {
 
   let listedUsers = null;
   if (usersStatus === "success" && users) {
-    listedUsers = users.map((user: User, index: number) => {
-      return <User key={index} user={user} />;
+    listedUsers = users.map((user: User) => {
+      return <User key={user.id} user={user} />;
     });
   }
 

@@ -3,7 +3,9 @@
 Css following javascript-friendly BEM (https://medium.com/trabe/a-more-javascript-friendly-bem-naming-convention-75c7f01ff736)
 
 Blocks **<PascalCase>**: `VideoPlayer`
+
 Elements **<\_camelCase>**: `VideoPlayer_buttonsContainer`
+
 Modifiers **<\_\_camelCase>**: `VideoPlayer___isLoading`
 
 ### `yarn start`
