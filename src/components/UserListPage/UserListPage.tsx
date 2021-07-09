@@ -2,34 +2,35 @@ import { ReactElement, useEffect } from "react";
 import { Dispatch } from "redux";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 
-import * as userListActions from "../../store/actions/userListActions";
-import styles from "./UserList.module.scss";
-import User from "./User/User";
+import * as userListPageActions from "../../store/actions/userListPageActions";
+import styles from "./UserListPage.module.scss";
+import UserList from "./UserList/UserList";
+import ViewModes from "./ViewModes/ViewModes";
 import UserSearch from "./UserSearch/UserSearch";
 import { useDocTitle } from "../../hooks/useDocTitle";
 
-export default function UserList(): ReactElement {
+export default function UserListPage(): ReactElement {
   // REDUX STATE DATA
   const users: User[] = useSelector(
-    (state: RootStateOrAny) => state.userListReducer.users
+    (state: RootStateOrAny) => state.userListPageReducer.users
   );
   const usersError: string = useSelector(
-    (state: RootStateOrAny) => state.userListReducer.usersError
+    (state: RootStateOrAny) => state.userListPageReducer.usersError
   );
   const usersStatus: string = useSelector(
-    (state: RootStateOrAny) => state.userListReducer.usersStatus
+    (state: RootStateOrAny) => state.userListPageReducer.usersStatus
   );
   const viewMode: "grid" | "list" = useSelector(
-    (state: RootStateOrAny) => state.userListReducer.viewMode
+    (state: RootStateOrAny) => state.userListPageReducer.viewMode
   );
   const latestSearch: string = useSelector(
-    (state: RootStateOrAny) => state.userListReducer.latestSearch
+    (state: RootStateOrAny) => state.userListPageReducer.latestSearch
   );
 
   const defaultPageTitle = "Most followed GitHub users";
 
   // Set document title to latest search if it exists in redux
-  const [doctitle, setDocTitle] = useDocTitle(
+  const [setDocTitle] = useDocTitle(
     latestSearch ? `Search results for "${latestSearch}"` : defaultPageTitle
   );
 
@@ -41,9 +42,9 @@ export default function UserList(): ReactElement {
     // Update only no users already in redux state
     if (users.length < 1) {
       setDocTitle(defaultPageTitle);
-      dispatch(userListActions.fetchUsers("followers:>=0", "followers"));
+      dispatch(userListPageActions.fetchUsers("followers:>=0", "followers"));
     }
-  }, []);
+  }, [dispatch, setDocTitle, users.length]);
 
   // Fetch users, save redux searched string and localStorage latest only search if manually entered value
   const dispatchSearch = (
@@ -51,14 +52,14 @@ export default function UserList(): ReactElement {
     searchSort: string,
     includeSearchString?: boolean
   ) => {
-    dispatch(userListActions.fetchUsers(searchValue, searchSort));
+    dispatch(userListPageActions.fetchUsers(searchValue, searchSort));
 
     if (includeSearchString) {
-      dispatch(userListActions.setLatestSearch(searchValue));
+      dispatch(userListPageActions.setLatestSearch(searchValue));
       saveSearchToLocalStorage(searchValue);
       setDocTitle(`Search results for "${searchValue}"`);
     } else {
-      dispatch(userListActions.setLatestSearch(""));
+      dispatch(userListPageActions.setLatestSearch(""));
       setDocTitle(defaultPageTitle);
     }
   };
@@ -77,11 +78,13 @@ export default function UserList(): ReactElement {
     localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
   };
 
-  let listedUsers = null;
-  if (usersStatus === "success" && users) {
-    listedUsers = users.map((user: User) => {
-      return <User key={user.id} user={user} />;
-    });
+  let searchTitle = null;
+  if (latestSearch) {
+    searchTitle = (
+      <h1 className={styles.title}>Search results for "{latestSearch}"</h1>
+    );
+  } else {
+    searchTitle = <h1 className={styles.title}>Most popular GitHub users</h1>;
   }
 
   return (
@@ -92,24 +95,24 @@ export default function UserList(): ReactElement {
           searchSort: string,
           includeSearchString: boolean = true
         ) => dispatchSearch(searchValue, searchSort, includeSearchString)}
-        setViewMode={(viewMode: string) =>
-          dispatch(userListActions.setViewMode(viewMode))
-        }
         latestSearch={latestSearch}
+      />
+      <div className={styles.toolbar}>
+        {searchTitle}
+        <ViewModes
+          viewMode={viewMode}
+          setViewMode={(viewMode: string) =>
+            dispatch(userListPageActions.setViewMode(viewMode))
+          }
+        />
+      </div>
+
+      <UserList
+        users={users}
+        usersStatus={usersStatus}
+        usersError={usersError}
         viewMode={viewMode}
       />
-      <ul className={`${styles[viewMode]}`}>
-        {usersStatus === "loading" && (
-          <div className="message__neutral">LOADING...</div>
-        )}
-        {usersStatus === "failed" && (
-          <div className="message__neutral">{usersError}</div>
-        )}
-        {usersStatus === "success" && users.length > 0 && <>{listedUsers}</>}
-        {usersStatus === "success" && users.length === 0 && (
-          <div className="message__neutral">No users found</div>
-        )}
-      </ul>
     </div>
   );
 }

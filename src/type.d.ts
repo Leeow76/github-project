@@ -1,13 +1,3 @@
-// Company types
-// interface Company {
-//   name: string;
-// }
-
-// type CompanyState = {
-//   companies: Company[];
-//   selectedCompany: Company;
-// };
-
 interface User {
   login: string;
   id: number;

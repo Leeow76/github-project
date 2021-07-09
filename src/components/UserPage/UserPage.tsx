@@ -8,7 +8,7 @@ import styles from "./UserPage.module.scss";
 import { useDocTitle } from "../../hooks/useDocTitle";
 
 export default function UserPage(): ReactElement {
-  const [doctitle, setDocTitle] = useDocTitle();
+  const [setDocTitle] = useDocTitle();
   // REDUX STATE DATA
   const user: User = useSelector(
     (state: RootStateOrAny) => state.userPageReducer.userPageUser
@@ -23,7 +23,7 @@ export default function UserPage(): ReactElement {
   useEffect(() => {
     dispatch(usersPageActions.fetchUser(formattedPathname));
     setDocTitle(`User "${formattedPathname}"`);
-  }, []);
+  }, [dispatch, formattedPathname, setDocTitle]);
 
   let userRepos = undefined;
   if (!user || !user.repos) {

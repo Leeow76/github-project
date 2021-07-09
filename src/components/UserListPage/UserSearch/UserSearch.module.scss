@@ -1,0 +1,29 @@
+@import "../../../styles/variables";
+
+.field {
+    padding: 0;
+    margin: $gutter auto;
+    box-sizing: border-box;
+    width: 320px;
+    max-width: 100%;
+}
+
+.input {
+    padding-right: $gutter;
+    &__clearable {
+        padding-right: $input-height;
+    }
+}
+
+.clear {
+    position: absolute;
+    right: $input-height;
+    min-height: $input-height;
+}
+
+@media only screen and (min-width: $screen__xs) {
+    .viewModes{
+        min-width: $input-height * 2 + 8px;
+        display: block;
+    }
+}

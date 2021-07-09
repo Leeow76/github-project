@@ -7,7 +7,7 @@ const useDocTitle = title => {
     document.title = doctitle;
   }, [doctitle]);
 
-  return [doctitle, setDocTitle];
+  return [setDocTitle];
 };
 
 export {useDocTitle};

@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import userListReducer from "./userListReducer";
+import userListPageReducer from "./userListPageReducer";
 import userPageReducer from "./userPageReducer";
 
 export default combineReducers({
-  userListReducer: userListReducer,
+  userListPageReducer: userListPageReducer,
   userPageReducer: userPageReducer,
 });
