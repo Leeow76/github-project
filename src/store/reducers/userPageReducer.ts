@@ -44,6 +44,7 @@ const usersReducer = (state = userPageState, action: AnyAction) => {
           ...state,
           userPageUser: fetchUserListReposUser,
         };
+
     case actionTypes.FETCH_USERPAGE_ORGS:
       let fetchUserListOrgsUser = {...state.userPageUser};
       fetchUserListOrgsUser["orgs"] = action.orgs;

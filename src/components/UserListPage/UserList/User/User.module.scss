@@ -5,7 +5,7 @@
   padding: $gutter;
   background: #fff;
   border-radius: 0.5rem;
-  &__image {
+  &Image {
     width: 145px;
     display: block;
     margin: 0 auto $gutter;
@@ -15,7 +15,7 @@
       border-radius: 100%;
     }
   }
-  &__info {
+  &Info {
     text-align: center;
     p:last-child {
       margin-bottom: $gutter;
@@ -23,10 +23,10 @@
       border-bottom: 1px solid $background-gray;
     }
   }
-  &__repos {
+  &Repos {
     margin-right: -$gutter / 2;
   }
-  &__repo {
+  &Repo {
     margin-bottom: $gutter / 2;
     margin-right: $gutter / 2;
     background-color: $background-gray;
@@ -41,7 +41,7 @@
     [class^="UserList_list"] > & {
       display: grid;
       grid-template-columns: auto 1fr 2fr;
-      .item__image {
+      .itemImage {
         margin-right: $gutter;
         margin-bottom: 0;
         padding-right: $gutter;
@@ -49,7 +49,7 @@
         align-items: center;
         border-right: 1px solid $background-gray;
       }
-      .item__info {
+      .itemInfo {
         margin-right: $gutter;
         padding-right: $gutter;
         border-right: 1px solid $background-gray;
