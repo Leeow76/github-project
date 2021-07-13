@@ -4,18 +4,37 @@ import * as actionTypes from "../actionTypes";
 
 export interface UserPageState {
   userPageUser: User | null;
+  userError: string | null;
+  userStatus: "idle" | "loading " | "success" | "failed";
 }
 
 const userPageState: UserPageState = {
   userPageUser: null,
+  userError: null,
+  userStatus: "idle"
 };
 
 const usersReducer = (state = userPageState, action: AnyAction) => {
   switch (action.type) {
-    case actionTypes.FETCH_USER:
+    case actionTypes.FETCH_USER_LOADING:
       return {
         ...state,
+        userError: null,
+        userStatus: "loading",
+      };
+
+    case actionTypes.FETCH_USER_SUCCESS:
+      return {
+        ...state,
+        userStatus: "success",
         userPageUser: action.user,
+      };
+        
+    case actionTypes.FETCH_USER_ERROR:
+      return {
+        ...state,
+        userError: action.error.message,
+        userStatus: "failed",
       };
 
     case actionTypes.FETCH_USERPAGE_REPOS:

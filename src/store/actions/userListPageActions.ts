@@ -48,7 +48,7 @@ export const fetchUsers =
           settings
         )
       ).json();
-      if (data.items) {
+      if (data.items.length > 0) {
         const users = data.items;
         // Fetch user repos
         dispatch(fetchUsersSuccess(users));
@@ -56,7 +56,7 @@ export const fetchUsers =
           dispatch(fetchUserRepos(user.login, "userList"));
         });
       } else {
-        throw new Error("Could not fetch users");
+        throw new Error("Could not find users");
       }
     } catch (error) {
       dispatch(fetchUsersError(error));

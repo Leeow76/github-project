@@ -13,6 +13,12 @@ export default function UserPage(): ReactElement {
   const user: User = useSelector(
     (state: RootStateOrAny) => state.userPageReducer.userPageUser
   );
+  const userError: string = useSelector(
+    (state: RootStateOrAny) => state.userPageReducer.userError
+  );
+  const userStatus: string = useSelector(
+    (state: RootStateOrAny) => state.userPageReducer.userStatus
+  );
 
   // REDUX DISPATCHES
   const dispatch: Dispatch<any> = useDispatch();
@@ -64,11 +70,21 @@ export default function UserPage(): ReactElement {
 
   return (
     <>
-      <Link to="/" className="button button_secondary button_iconAndText">
+      <Link
+        to="/"
+        className={`button button_secondary button_iconAndText ${styles.back}`}
+      >
         <span className="material-icons-round">chevron_left</span>
         <span>Back</span>
       </Link>
-      {user && (
+
+      {userStatus === "loading" && (
+        <div className="message__neutral">LOADING...</div>
+      )}
+      {userStatus === "failed" && (
+        <div className="message__neutral">{userError}</div>
+      )}
+      {userStatus === "success" && (
         <>
           <h1 className={styles.title}>{user.login}</h1>
           <div className={styles.user}>

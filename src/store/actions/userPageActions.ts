@@ -3,8 +3,28 @@ import { Dispatch } from "redux";
 import * as actionTypes from "../actionTypes";
 import { fetchUserRepos, addTokenIfExists } from './commonUserActions';
 
+// User page status actions
+const fetchUserLoading = () => (dispatch: Dispatch<any>) => {
+  dispatch({
+    type: actionTypes.FETCH_USER_LOADING,
+  });
+};
+const fetchUserSuccess = (user: User[]) => (dispatch: Dispatch<any>) => {
+  dispatch({
+    type: actionTypes.FETCH_USER_SUCCESS,
+    user: user,
+  });
+};
+const fetchUserError = (error: string) => (dispatch: Dispatch<any>) => {
+  dispatch({
+    type: actionTypes.FETCH_USER_ERROR,
+    error: error,
+  });
+};
+
 // Fetch user for user page
 export const fetchUser = (user: string) => async (dispatch: Dispatch<any>) => {
+  dispatch(fetchUserLoading());
   let settings: any = {
     method: "GET",
     headers: {
@@ -19,10 +39,7 @@ export const fetchUser = (user: string) => async (dispatch: Dispatch<any>) => {
       )
     ).json();
     if (data.message !== "Not Found") {
-      dispatch({
-        type: actionTypes.FETCH_USER,
-        user: data,
-      });
+      dispatch(fetchUserSuccess(data));
       dispatch(fetchUserRepos(user, "userPage"));
       dispatch(fetchUserOrgs(user));
     } else {
@@ -30,10 +47,7 @@ export const fetchUser = (user: string) => async (dispatch: Dispatch<any>) => {
     }
   } catch (error) {
     console.log(error);
-    dispatch({
-      type: actionTypes.FETCH_USER,
-      user: null,
-    })
+    dispatch(fetchUserError(error));
   }
 };
 

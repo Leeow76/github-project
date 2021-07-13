@@ -1,8 +1,12 @@
 @import "../../styles/variables";
 
+.back {
+  margin-bottom: $gutter;
+}
+
 .title {
   border-bottom: 1px solid $gray;
-  margin: $gutter 0;
+  margin: 0 0 $gutter;
   padding-bottom: $gutter;
 }
 
@@ -34,7 +38,7 @@
 
 .orgList {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   column-gap: $gutter;
 }
 

@@ -24,6 +24,7 @@ const userListReducer = (state = userListState, action: AnyAction) => {
     case actionTypes.FETCH_USERS_LOADING:
       return {
         ...state,
+        usersError: null,
         usersStatus: "loading",
       };
 

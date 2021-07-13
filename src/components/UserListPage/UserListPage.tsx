@@ -28,10 +28,11 @@ export default function UserListPage(): ReactElement {
   );
 
   const defaultPageTitle = "Most followed GitHub users";
+  const searchPageTitle = `Search results for "${latestSearch}"`;
 
   // Set document title to latest search if it exists in redux
   const [setDocTitle] = useDocTitle(
-    latestSearch ? `Search results for "${latestSearch}"` : defaultPageTitle
+    latestSearch ? searchPageTitle : defaultPageTitle
   );
 
   // REDUX DISPATCHES
@@ -80,11 +81,9 @@ export default function UserListPage(): ReactElement {
 
   let searchTitle = null;
   if (latestSearch) {
-    searchTitle = (
-      <h1 className={styles.title}>Search results for "{latestSearch}"</h1>
-    );
+    searchTitle = <h1 className={styles.title}>{searchPageTitle}</h1>;
   } else {
-    searchTitle = <h1 className={styles.title}>Most popular GitHub users</h1>;
+    searchTitle = <h1 className={styles.title}>{defaultPageTitle}</h1>;
   }
 
   return (
