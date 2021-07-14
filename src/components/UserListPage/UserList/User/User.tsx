@@ -17,7 +17,7 @@ export default function User({ user }: Props): ReactElement {
     userRepos = <p>LOADING...</p>;
   } else if (repos.length === 0) {
     userRepos = <p>No repos to display</p>;
-  } else if (repos.length > 0) {
+  } else {
     userRepos = repos.map((repo, index) => {
       return (
         <span className={styles.itemRepo + " textSmall"} key={index}>

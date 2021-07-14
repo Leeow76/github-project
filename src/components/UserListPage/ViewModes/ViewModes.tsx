@@ -1,9 +1,9 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 
 import styles from "./ViewModes.module.scss";
 
 interface Props {
-  viewMode: "grid" | "list";
+  viewMode: "gridMode" | "listMode";
   setViewMode: Function;
 }
 
@@ -11,25 +11,35 @@ export default function ViewModes({
   viewMode,
   setViewMode,
 }: Props): ReactElement {
-  let viewModes = null;
-  let gridStyles = null;
-  let listStyles = null;
-  if (viewMode === "list") {
-    gridStyles = `button ${styles.modeButton}`;
-    listStyles = `button ${styles.modeButton} ${styles.modeButton__active}`;
+  let gridStyles = "modeButton_gridMode ";
+  let listStyles = "modeButton_listMode ";
+  const defaultButtonStyles = `button ${styles.modeButton}`;
+  if (viewMode === "listMode") {
+    gridStyles += defaultButtonStyles;
+    listStyles += `${defaultButtonStyles} ${styles.modeButton__active}`;
   } else {
-    gridStyles = `button ${styles.modeButton} ${styles.modeButton__active}`;
-    listStyles = `button ${styles.modeButton}`;
+    gridStyles += `${defaultButtonStyles} ${styles.modeButton__active}`;
+    listStyles += defaultButtonStyles;
   }
-  viewModes = (
+  const viewModes = (
     <div className={styles.viewModes}>
-      <button onClick={() => setViewMode("list")} className={listStyles}>
+      <button
+        onClick={() =>
+          viewMode === "gridMode" ? setViewMode("listMode") : null
+        }
+        className={listStyles}
+      >
         <span className="material-icons-round">view_stream</span>
       </button>
-      <button onClick={() => setViewMode("grid")} className={gridStyles}>
+      <button
+        onClick={() =>
+          viewMode === "listMode" ? setViewMode("gridMode") : null
+        }
+        className={gridStyles}
+      >
         <span className="material-icons-round">grid_view</span>
       </button>
     </div>
   );
-  return <div>{viewModes}</div>;
+  return <>{viewModes}</>;
 }

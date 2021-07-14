@@ -6,7 +6,7 @@ export interface UserListState {
   users: User[];
   usersError: string | null;
   usersStatus: "idle" | "loading " | "success" | "failed";
-  viewMode: "list" | "grid";
+  viewMode: "listMode" | "gridMode";
   latestSearch: string;
 }
 
@@ -14,7 +14,7 @@ const userListState: UserListState = {
   users: [],
   usersError: null,
   usersStatus: "idle",
-  viewMode: "list",
+  viewMode: "listMode",
   latestSearch: ""
 };
 

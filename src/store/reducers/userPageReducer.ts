@@ -14,7 +14,7 @@ const userPageState: UserPageState = {
   userStatus: "idle"
 };
 
-const usersReducer = (state = userPageState, action: AnyAction) => {
+const userPageReducer = (state = userPageState, action: AnyAction) => {
   switch (action.type) {
     case actionTypes.FETCH_USER_LOADING:
       return {
@@ -56,4 +56,4 @@ const usersReducer = (state = userPageState, action: AnyAction) => {
   return state;
 };
 
-export default usersReducer;
+export default userPageReducer;

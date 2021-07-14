@@ -38,7 +38,7 @@
 
 @media only screen and (min-width: $screen__s) {
   .item {
-    [class^="UserList_list"] > & {
+    [class^="UserList_listMode"] > & {
       display: grid;
       grid-template-columns: auto 1fr 2fr;
       .itemImage {

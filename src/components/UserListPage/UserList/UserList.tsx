@@ -23,7 +23,7 @@ export default function UserList({
     });
   }
   return (
-    <ul className={`${styles[viewMode]}`}>
+    <ul className={`${styles[viewMode]} ${styles.list}`}>
       {usersStatus === "loading" && (
         <div className="message__neutral">LOADING...</div>
       )}
@@ -31,9 +31,6 @@ export default function UserList({
         <div className="message__neutral">{usersError}</div>
       )}
       {usersStatus === "success" && users.length > 0 && <>{listedUsers}</>}
-      {usersStatus === "success" && users.length === 0 && (
-        <div className="message__neutral">No users found</div>
-      )}
     </ul>
   );
 }

@@ -20,7 +20,7 @@ export default function UserListPage(): ReactElement {
   const usersStatus: string = useSelector(
     (state: RootStateOrAny) => state.userListPageReducer.usersStatus
   );
-  const viewMode: "grid" | "list" = useSelector(
+  const viewMode: "gridMode" | "listMode" = useSelector(
     (state: RootStateOrAny) => state.userListPageReducer.viewMode
   );
   const latestSearch: string = useSelector(

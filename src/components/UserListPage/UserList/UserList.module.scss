@@ -1,12 +1,15 @@
 @import "../../../styles/variables";
 
-.list,
-.grid {
+.list {
   list-style: none;
+}
+
+.listMode,
+.gridMode {
   padding: 0;
   margin-bottom: 0;
 }
-.grid {
+.gridMode {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
   column-gap: $gutter;
