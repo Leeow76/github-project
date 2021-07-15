@@ -41,7 +41,7 @@ describe("<User />", () => {
     // Simulate click on inactive grid button (function should be called once)
     wrapper.find(".modeButton.modeButton_gridMode:not(.modeButton__active)").simulate('click');
     expect(props.setViewMode).toHaveBeenCalledTimes(1);
-    expect(props.setViewMode).toHaveBeenCalledWith("gridMode");
+    expect(props.setViewMode).toHaveBeenLastCalledWith("gridMode");
 
     // Change list mode to grid
     wrapper.setProps({ viewMode: "gridMode" });
@@ -52,7 +52,7 @@ describe("<User />", () => {
     // Simulate click on inactive list button (function should be called once more)
     wrapper.find(".modeButton.modeButton_listMode:not(.modeButton__active)").simulate('click');
     expect(props.setViewMode).toHaveBeenCalledTimes(2);
-    expect(props.setViewMode).toHaveBeenCalledWith("gridMode");
+    expect(props.setViewMode).toHaveBeenLastCalledWith("listMode");
   });
 
 });

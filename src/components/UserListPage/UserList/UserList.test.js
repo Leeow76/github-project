@@ -19,7 +19,6 @@ describe("<UserList />", () => {
   it("renders user list", () => {
     expect(wrapper.find("ul.list").length).toEqual(1);
   })
-
   
   it("renders loading text when fetching users and status is loading", () => {
     wrapper.setProps({ usersStatus: "loading" });

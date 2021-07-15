@@ -23,7 +23,7 @@ export default function RecentSearches({
   let recentSearchesHtml = null;
   let recentSearchesCount = null;
   if (recentSearches) {
-    const parsedData = JSON.parse(localStorage.getItem("recentSearches") || "");
+    const parsedData = JSON.parse(recentSearches);
     recentSearchesCount = parsedData.length;
     const mappedSearches = parsedData.map(
       (searchValue: string, index: number) => {
