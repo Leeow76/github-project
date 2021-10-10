@@ -21,9 +21,12 @@ export const userReposApi = async (user: string) => {
         repos: data
       }
     } else {
-      throw new Error(data.message);
+      return {
+        user: user,
+        repos: null,
+      }
     }
   } catch (error) {
-    console.log(error)
+    throw new Error("Could not fetch user repositories");
   }
 };

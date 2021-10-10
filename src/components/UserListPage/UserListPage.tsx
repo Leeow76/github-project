@@ -8,6 +8,7 @@ import UserList from "./UserList/UserList";
 import ViewModes from "./ViewModes/ViewModes";
 import UserSearch from "./UserSearch/UserSearch";
 import { useDocTitle } from "../../hooks/useDocTitle";
+import { ViewMode } from "./types";
 
 export default function UserListPage(): ReactElement {
   // REDUX STATE DATA
@@ -100,7 +101,7 @@ export default function UserListPage(): ReactElement {
         {searchTitle}
         <ViewModes
           viewMode={viewMode}
-          setViewMode={(viewMode: string) =>
+          setViewMode={(viewMode: ViewMode) =>
             dispatch(setViewMode(viewMode))
           }
         />

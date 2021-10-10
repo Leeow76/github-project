@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { UserListState } from './types'
+import { UserListState, UserReposPayload, ViewMode } from './types'
 import usersApi from './api'
 import { userReposApi } from '../../store/api'
 
@@ -26,7 +26,7 @@ export const fetchUsers =  createAsyncThunk(
 
     // Fetch repos for users
     if (response.length > 0) {
-      response.forEach((response: any) => {
+      response.forEach((response: User) => {
         dispatch(fetchUserRepos({user: response.login}))
       })
     }
@@ -48,42 +48,42 @@ export const userListSlice = createSlice({
   name: 'userListPageSlice',
   initialState,
   reducers: {
-    setViewMode: (state, action: PayloadAction<any>) => {
+    setViewMode: (state, action: PayloadAction<ViewMode>) => {
       state.viewMode = action.payload
     },
-    setLatestSearch: (state, action: PayloadAction<any>) => {
+    setLatestSearch: (state, action: PayloadAction<string>) => {
       state.latestSearch = action.payload
     },
-    setSearchValue: (state, action: PayloadAction<any>) => {
+    setSearchValue: (state, action: PayloadAction<string>) => {
       state.latestSearch = action.payload
     }
   },
   extraReducers: (builder) => {
     builder.addCase(
-      fetchUsers.pending, (state: any) => {
+      fetchUsers.pending, (state: UserListState) => {
         state.usersStatus = "loading"
         state.users = []
       },
     )
     builder.addCase(
-      fetchUsers.fulfilled, (state: any, action: any) => {
+      fetchUsers.fulfilled, (state: UserListState, action: PayloadAction<User[]>) => {
         state.usersStatus = "success"
         state.users = action.payload
       },
     )
     builder.addCase(
-      fetchUsers.rejected, (state: any) => {
+      fetchUsers.rejected, (state: UserListState) => {
         state.usersStatus = "failed"
         state.users = []
       },
     )
     builder.addCase(
-      fetchUserRepos.fulfilled, (state: any, action: any) => {
-        const searchedUser = state.users?.find(
+      fetchUserRepos.fulfilled, (state: UserListState, action: PayloadAction<UserReposPayload>) => {
+        const targetUser = state.users?.find(
           (user: User) => user.login === action.payload.user
         )
-        if (searchedUser) {
-          searchedUser["repos"] = action.payload.repos;
+        if (targetUser) {
+          targetUser["repos"] = action.payload.repos;
         }
       },
     )
