@@ -2,7 +2,7 @@ import { ReactElement, useEffect } from "react";
 import { Dispatch } from "redux";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 
-import * as userListPageActions from "../../store/actions/userListPageActions";
+import { setViewMode, setLatestSearch, fetchUsers } from "./UserListSlice";
 import styles from "./UserListPage.module.scss";
 import UserList from "./UserList/UserList";
 import ViewModes from "./ViewModes/ViewModes";
@@ -43,9 +43,9 @@ export default function UserListPage(): ReactElement {
     // Update only no users already in redux state
     if (users.length < 1) {
       setDocTitle(defaultPageTitle);
-      dispatch(userListPageActions.fetchUsers("followers:>=0", "followers"));
+      dispatch(fetchUsers({query: "followers:>=0", sort: "followers"}));
     }
-  }, [dispatch, setDocTitle, users.length]);
+  }, []);
 
   // Fetch users, save redux searched string and localStorage latest only search if manually entered value
   const dispatchSearch = (
@@ -53,14 +53,14 @@ export default function UserListPage(): ReactElement {
     searchSort: string,
     includeSearchString?: boolean
   ) => {
-    dispatch(userListPageActions.fetchUsers(searchValue, searchSort));
+    dispatch(fetchUsers({query: searchValue, sort: searchSort}));
 
     if (includeSearchString) {
-      dispatch(userListPageActions.setLatestSearch(searchValue));
+      dispatch(setLatestSearch(searchValue));
       saveSearchToLocalStorage(searchValue);
       setDocTitle(`Search results for "${searchValue}"`);
     } else {
-      dispatch(userListPageActions.setLatestSearch(""));
+      dispatch(setLatestSearch(""));
       setDocTitle(defaultPageTitle);
     }
   };
@@ -101,7 +101,7 @@ export default function UserListPage(): ReactElement {
         <ViewModes
           viewMode={viewMode}
           setViewMode={(viewMode: string) =>
-            dispatch(userListPageActions.setViewMode(viewMode))
+            dispatch(setViewMode(viewMode))
           }
         />
       </div>
