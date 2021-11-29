@@ -46,7 +46,7 @@ export default function UserListPage(): ReactElement {
       setDocTitle(defaultPageTitle);
       dispatch(fetchUsers({query: "followers:>=0", sort: "followers"}));
     }
-  }, []);
+  }, [dispatch, setDocTitle, users.length]);
 
   // Fetch users, save redux searched string and localStorage latest only search if manually entered value
   const dispatchSearch = (
